@@ -1,0 +1,445 @@
+/* General Body Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f7f6;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure footer sticks to bottom */
+}
+
+/* Container for content */
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+    flex-grow: 1; /* Allow container to grow and push footer down */
+}
+
+/* Navbar */
+.navbar {
+    background-color: #2c3e50; /* Dark blue-grey */
+    padding: 1rem 0;
+    color: #ecf0f1; /* Light grey text */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.navbar-brand {
+    color: #ecf0f1;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.navbar-links a {
+    color: #ecf0f1;
+    text-decoration: none;
+    margin-left: 1.5rem;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.navbar-links a:hover {
+    color: #3498db; /* Bright blue on hover */
+}
+
+.navbar-links .logout-button {
+    background: none;
+    border: none;
+    color: #ecf0f1;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-left: 1.5rem;
+    padding: 0;
+    transition: color 0.3s ease;
+}
+
+.navbar-links .logout-button:hover {
+    color: #e74c3c; /* Red on hover */
+}
+
+/* Auth Cards (Login/Register) */
+.auth-card {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    max-width: 450px;
+    margin: 50px auto; /* Center card on page */
+}
+
+.auth-card h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 25px;
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+}
+
+.form-inline-add {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px; /* Spacing between form elements */
+    align-items: flex-end; /* Align items at the bottom */
+}
+
+.form-inline-add .form-group {
+    flex: 1; /* Allow form groups to take up available space */
+    min-width: 180px; /* Minimum width before wrapping */
+    margin-bottom: 0; /* Remove default margin as gap handles spacing */
+}
+
+.form-inline-add .btn {
+    flex-shrink: 0; /* Prevent button from shrinking */
+    padding: 12px 20px;
+    height: 44px; /* Match height of input fields */
+}
+
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border: none;
+}
+
+.btn-primary {
+    background-color: #3498db; /* Bright blue */
+    color: #fff;
+    width: 100%; /* Full width for auth buttons */
+}
+
+.btn-primary:hover {
+    background-color: #2980b9; /* Darker blue */
+    transform: translateY(-2px);
+}
+
+.btn-success {
+    background-color: #2ecc71; /* Emerald green */
+    color: #fff;
+}
+
+.btn-success:hover {
+    background-color: #27ae60;
+    transform: translateY(-2px);
+}
+
+.btn-info {
+    background-color: #3498db; /* Bright blue */
+    color: #fff;
+}
+
+.btn-info:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+}
+
+.btn-danger {
+    background-color: #e74c3c; /* Alizarin red */
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background-color: #c0392b;
+    transform: translateY(-2px);
+}
+
+.btn-sm {
+    padding: 6px 12px;
+    font-size: 0.875rem;
+}
+
+/* Alerts */
+.alert {
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.alert-info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+/* Table Styles */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden; /* Ensures rounded corners apply to table content */
+}
+
+.table thead th {
+    background-color: #34495e; /* Darker blue-grey */
+    color: #ecf0f1;
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.table tbody td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+}
+
+.table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Status Badges */
+.status-paid {
+    background-color: #d4edda; /* Light green */
+    color: #155724; /* Dark green */
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+
+.status-unpaid {
+    background-color: #ffeeba; /* Light yellow */
+    color: #856404; /* Dark yellow */
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+
+.status-overdue {
+    background-color: #f8d7da; /* Light red */
+    color: #721c24; /* Dark red */
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+
+.status-pending { /* New status for loans */
+    background-color: #bfdaff; /* Light blue */
+    color: #004d99; /* Dark blue */
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+
+.status-approved { /* New status for loans */
+    background-color: #d4edda; /* Light green */
+    color: #155724; /* Dark green */
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+
+.status-rejected { /* New status for loans */
+    background-color: #f8d7da; /* Light red */
+    color: #721c24; /* Dark red */
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+
+/* Card styles for general sections */
+.card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.card-header {
+    background-color: #ecf0f1; /* Light grey */
+    padding: 15px 20px;
+    font-weight: bold;
+    color: #2c3e50;
+    border-bottom: 1px solid #ddd;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+/* Footer */
+.footer {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    text-align: center;
+    padding: 1.2rem 0;
+    margin-top: 40px;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.footer .container {
+    padding: 0 20px;
+}
+
+.footer p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+/* Utility classes */
+.mt-3 { margin-top: 1rem !important; }
+.mt-4 { margin-top: 1.5rem !important; }
+.text-center { text-align: center !important; }
+
+/* Transaction specific styles for forms that appear conditionally */
+.transaction-form-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 15px;
+    margin-top: 15px; /* Add some space above the transaction forms */
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+}
+
+.transaction-form-group .form-group {
+    margin-bottom: 0; /* Remove default margin to let gap handle it */
+    flex: 1;
+    min-width: 150px; /* Adjust as needed */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .navbar .container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .navbar-links {
+        margin-top: 10px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        align-items: flex-start;
+    }
+    .navbar-links a, .navbar-links .logout-button {
+        margin: 5px 0;
+        width: auto;
+    }
+
+    .form-inline-add {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .form-inline-add .form-group {
+        min-width: unset;
+        width: 100%;
+    }
+
+    .form-inline-add .btn {
+        width: 100%;
+    }
+
+    /* Make transaction forms responsive */
+    .transaction-form-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .transaction-form-group .form-group {
+        width: 100%;
+    }
+
+    .table thead {
+        display: none; /* Hide table headers on small screens */
+    }
+
+    .table tbody tr {
+        display: block;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 10px;
+    }
+
+    .table tbody td {
+        display: block;
+        text-align: right;
+        border-bottom: 1px solid #eee;
+        padding: 8px 0;
+        position: relative;
+    }
+
+    .table tbody td::before {
+        content: attr(data-label); /* Use data-label for pseudo-elements */
+        float: left;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .table tbody td:last-child {
+        border-bottom: none;
+    }
+}

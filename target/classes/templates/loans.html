@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Loans - Banking App</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div th:replace="~{fragments :: header}"></div>
+
+    <div class="container">
+        <h2 class="mt-4">My Loans</h2>
+
+        <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+        <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+
+        <div class="card mt-4">
+            <div class="card-header">Apply for New Loan</div>
+            <div class="card-body">
+                <form th:action="@{/loans/add}" th:object="${newLoan}" method="post" class="form-inline-add">
+                    <div class="form-group">
+                        <label for="loanAmount">Loan Amount:</label>
+                        <input type="number" step="0.01" id="loanAmount" th:field="*{loanAmount}" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="interestRate">Interest Rate (e.g., 0.05 for 5%):</label>
+                        <input type="number" step="0.001" id="interestRate" th:field="*{interestRate}" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="termMonths">Term (Months):</label>
+                        <input type="number" id="termMonths" th:field="*{termMonths}" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="startDate">Start Date:</label>
+                        <input type="date" id="startDate" th:field="*{startDate}" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="dueDate">Due Date:</label>
+                        <input type="date" id="dueDate" th:field="*{dueDate}" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-success">Apply for Loan</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="loan-list">
+            <h3 class="mt-4">Existing Loans</h3>
+            <div th:if="${loans.isEmpty()}" class="alert alert-info">No loans found. Apply for your first loan!</div>
+            <table class="table table-striped" th:if="${!loans.isEmpty()}">
+                <thead>
+                    <tr>
+                        <th>Loan Amount</th>
+                        <th>Interest Rate</th>
+                        <th>Term (Months)</th>
+                        <th>Start Date</th>
+                        <th>Due Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="loan : ${loans}">
+                        <td th:text="${#numbers.formatDecimal(loan.loanAmount, 1, 'COMMA', 2, 'POINT')}">$10000.00</td>
+                        <td th:text="${#numbers.formatDecimal(loan.interestRate * 100, 1, 'POINT', 2, 'POINT')} + '%'">5.00%</td>
+                        <td th:text="${loan.termMonths}">12</td>
+                        <td th:text="${#temporals.format(loan.startDate, 'dd-MM-yyyy')}">01-06-2025</td>
+                        <td th:text="${#temporals.format(loan.dueDate, 'dd-MM-yyyy')}">01-06-2026</td>
+                        <td>
+                            <span th:classappend="${loan.status == 'PAID' ? 'status-paid' : (loan.status == 'APPROVED' ? 'status-approved' : (loan.status == 'PENDING' ? 'status-pending' : (loan.status == 'REJECTED' ? 'status-rejected' : 'status-overdue')))}"
+                                  th:text="${loan.status}">PENDING</span>
+                        </td>
+                        <td>
+                            <form th:action="@{/loans/pay/{id}(id=${loan.id})}" method="post" style="display:inline;" th:if="${loan.status == 'APPROVED' || loan.status == 'OVERDUE'}">
+                                <button type="submit" class="btn btn-sm btn-info">Mark as Paid</button>
+                            </form>
+                            <form th:action="@{/loans/delete/{id}(id=${loan.id})}" method="post" style="display:inline;">
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this loan?');">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div th:replace="~{fragments :: footer}"></div>
+</body>
+</html>

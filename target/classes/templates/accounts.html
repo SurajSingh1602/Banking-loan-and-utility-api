@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bank Accounts - Banking App</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div th:replace="~{fragments :: header}"></div>
+
+    <div class="container">
+        <h2 class="mt-4">My Bank Accounts</h2>
+
+        <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+        <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+
+        <div class="card mt-4">
+            <div class="card-header">Add New Account</div>
+            <div class="card-body">
+                <form th:action="@{/accounts/add}" th:object="${newAccount}" method="post" class="form-inline-add">
+                    <div class="form-group">
+                        <label for="accountNumber">Account Number:</label>
+                        <input type="text" id="accountNumber" th:field="*{accountNumber}" class="form-control" placeholder="e.g., ACC-XYZ-123" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="accountType">Account Type:</label>
+                        <select id="accountType" th:field="*{accountType}" class="form-control" required>
+                            <option value="">Select Type</option>
+                            <option value="SAVINGS">SAVINGS</option>
+                            <option value="CHECKING">CHECKING</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="initialBalance">Initial Balance:</label>
+                        <input type="number" step="0.01" id="initialBalance" th:field="*{balance}" class="form-control" value="0.00">
+                    </div>
+                    <button type="submit" class="btn btn-success">Create Account</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="account-list">
+            <h3 class="mt-4">Existing Accounts</h3>
+            <div th:if="${accounts.isEmpty()}" class="alert alert-info">No bank accounts found. Create your first one!</div>
+            <table class="table table-striped" th:if="${!accounts.isEmpty()}">
+                <thead>
+                    <tr>
+                        <th>Account Number</th>
+                        <th>Type</th>
+                        <th>Balance</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="account : ${accounts}">
+                        <td th:text="${account.accountNumber}">ACC-001-USER1</td>
+                        <td th:text="${account.accountType}">SAVINGS</td>
+                        <td th:text="${#numbers.formatDecimal(account.balance, 1, 'COMMA', 2, 'POINT')}">$1500.00</td>
+                        <td>
+                            <form th:action="@{/accounts/{accountId}/deposit(accountId=${account.id})}" method="post" class="transaction-form-group">
+                                <div class="form-group">
+                                    <input type="number" step="0.01" name="amount" placeholder="Deposit Amt" class="form-control" required>
+                                </div>
+                                <button type="submit" class="btn btn-sm btn-info">Deposit</button>
+                            </form>
+                            <form th:action="@{/accounts/{accountId}/withdraw(accountId=${account.id})}" method="post" class="transaction-form-group">
+                                <div class="form-group">
+                                    <input type="number" step="0.01" name="amount" placeholder="Withdraw Amt" class="form-control" required>
+                                </div>
+                                <button type="submit" class="btn btn-sm btn-danger">Withdraw</button>
+                            </form>
+                            <a th:href="@{/accounts/{accountId}/transactions(accountId=${account.id})}" class="btn btn-sm btn-primary mt-2">View Transactions</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">Transfer Funds</div>
+            <div class="card-body">
+                <form th:action="@{/accounts/transfer}" method="post" class="form-inline-add">
+                    <div class="form-group">
+                        <label for="fromAccount">From Account:</label>
+                        <select id="fromAccount" name="fromAccountId" class="form-control" required>
+                            <option value="">Select Account</option>
+                            <option th:each="acc : ${accounts}" th:value="${acc.id}" th:text="${acc.accountNumber} + ' (' + ${acc.accountType} + ' - $' + ${#numbers.formatDecimal(acc.balance, 1, 'COMMA', 2, 'POINT')} + ')'"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="toAccount">To Account:</label>
+                        <select id="toAccount" name="toAccountId" class="form-control" required>
+                            <option value="">Select Account</option>
+                            <option th:each="acc : ${accounts}" th:value="${acc.id}" th:text="${acc.accountNumber} + ' (' + ${acc.accountType} + ' - $' + ${#numbers.formatDecimal(acc.balance, 1, 'COMMA', 2, 'POINT')} + ')'"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="transferAmount">Amount:</label>
+                        <input type="number" step="0.01" id="transferAmount" name="amount" class="form-control" placeholder="Transfer Amount" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Transfer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{fragments :: footer}"></div>
+</body>
+</html>

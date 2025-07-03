@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banking App</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<!-- Common Header Fragment -->
+<div th:fragment="header">
+    <nav class="navbar">
+        <div class="container">
+            <a class="navbar-brand" href="/">Banking App</a>
+            <div class="navbar-links">
+                <a th:href="@{/bills}" sec:authorize="isAuthenticated()">My Bills</a>
+                <a th:href="@{/accounts}" sec:authorize="isAuthenticated()">My Accounts</a>
+                <a th:href="@{/loans}" sec:authorize="isAuthenticated()">My Loans</a>
+                <a th:href="@{/swagger-ui.html}" target="_blank">API Docs</a>
+                <a th:href="@{/h2-console}" target="_blank">H2 Console</a>
+                <a th:href="@{/login}" sec:authorize="!isAuthenticated()">Login</a>
+                <a th:href="@{/register}" sec:authorize="!isAuthenticated()">Register</a>
+                <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
+                    <button type="submit" class="logout-button">Logout</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<!-- Common Footer Fragment -->
+<div th:fragment="footer">
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Banking App. All rights reserved.</p>
+        </div>
+    </footer>
+</div>
+
+</body>
+</html>
